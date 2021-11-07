@@ -27,9 +27,9 @@ class Client:
         elif code == 429:
             raise TooManyRequests()
 
-    def request(self, method: str, path: str, *, params: dict = {}, headers: dict = {}):
-        url: str = self.base_url + path
-        res: Optional[str] = getattr(requests, method.lower(), None)
+    def request(self, method: str, version: str, path: str, *, params: dict = {}, headers: dict = {}):
+        url = self.base_url + version + path
+        res = getattr(requests, method.lower(), None)
         if not res:
             raise TypeError("Wrong method argument passed!")
 
@@ -38,7 +38,6 @@ class Client:
 
         response = res(url, headers=headers, params=params)
         self.check_error(response)
-        print(response.text)
         res=response.json()
 
         return res
@@ -69,6 +68,7 @@ class Client:
 
         res = self.request(
             "POST", 
+            "/v1",
             "/calc", 
             params=params
         )
