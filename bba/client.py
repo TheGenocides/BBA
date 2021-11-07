@@ -46,7 +46,7 @@ class Client:
     def calculator(self, calc: str, ans: str = None) -> ResponseObject:
         """ResponseObject: Solve certain math equations (calcPost)
 
-        Paramaters
+        Parameters
         -----------
         calc: str:
             Equation of the math problem in string, e.g '1+5'
@@ -73,4 +73,4 @@ class Client:
             params=params
         )
 
-        return CalcObject(res)
+        return ResponseObject(res)
