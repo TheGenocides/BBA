@@ -1,0 +1,13 @@
+*main.py
+__pycache__/
+*.replit
+*poetry.lock
+*pyproject.toml
+*.breakpoints
+*.inv
+*.buildinfo
+*.doctree
+*.pickle
+build/
+dist/
+*.egg-info
