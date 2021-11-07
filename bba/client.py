@@ -16,7 +16,7 @@ class Client:
     """
     def __init__(self, api_key: str):
         self.api_key = api_key
-        self.base_url = "https://api.breadbot.me"
+        self.base_url = "https://api.breadbot.me/"
         self.calc = self.calculator #alias
 
     def check_error(self, response: requests.models.Response):
@@ -42,16 +42,16 @@ class Client:
 
         return res
 
-    def calculator(self, calc: str, ans: str = None) -> ResponseObject:
+    def calculator(self, expression: str, ans: str = None) -> ResponseObject:
         """ResponseObject: Solve certain math equations (calcPost)
 
         Parameters
         -----------
-        calc: str:
-            Equation of the math problem in string, e.g '1+5'
+        expression: str:
+            The math expression, e.g '6+6'
 
         ans: str:
-            You can use this as a variable, e.g Ans+4
+            Filled the 'Ans' word in expression. e.g if expression is 'Ans+2+1' and you defined ans argument as 1. Then the expression change to: 1+2+1 which is 4.
     
         
         Docs
@@ -60,17 +60,27 @@ class Client:
         """
         params={}
 
-        if calc:
-            params['calc'] = calc
+        if expression:
+            params['calc'] = expression
 
         if ans:
             params['ans'] = ans
 
         res = self.request(
             "POST", 
-            "/v1",
+            "v1",
             "/calc", 
             params=params
+        )
+
+        return ResponseObject(res)
+
+    def sentence(self) -> ResponseObject:
+        """ResponseObject: Generate a random sentence."""
+        res = self.request(
+            "POST", 
+            "v1", 
+            "/sentence"
         )
 
         return ResponseObject(res)
