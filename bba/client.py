@@ -1,7 +1,7 @@
 import requests
 import json
 from typing import Optional
-from .objects import CalcObject
+from .objects import ResponseObject
 from .errors import Unauthorized, TooManyRequests
 
 
@@ -43,8 +43,8 @@ class Client:
 
         return res
 
-    def calculator(self, calc: str, ans: str = None) -> CalcObject:
-        """CalcObject: Solve certain math equations (calcPost)
+    def calculator(self, calc: str, ans: str = None) -> ResponseObject:
+        """ResponseObject: Solve certain math equations (calcPost)
 
         Paramaters
         -----------
