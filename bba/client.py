@@ -1,6 +1,4 @@
 import requests
-import json
-from typing import Optional
 from .objects import ResponseObject
 from .errors import Unauthorized, TooManyRequests
 
