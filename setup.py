@@ -41,7 +41,7 @@ setup(
     project_urls={
         "HomePage/Github": "https://github.com/TheGenocides/BBA/",
     },
-    description="A Synchronous python API wrapper for twitter's api",
+    description="A Synchronous python API wrapper for bread bot's api",
     long_description=readme,
     long_description_content_type="text/markdown",
     install_requires=requirements,
