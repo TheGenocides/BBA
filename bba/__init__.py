@@ -5,7 +5,7 @@ from .errors import *
 from .objects import *
 
 __title__ = "BBA"
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "TheGenocides"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021 TheGenocides"
