@@ -1,6 +1,9 @@
 import requests
+import json
+from typing import Optional
+
 from .objects import ResponseObject
-from .errors import Unauthorized, TooManyRequests
+from .errors import Unauthorized, TooManyRequests, InternalServerError
 
 
 class Client:
@@ -25,6 +28,9 @@ class Client:
         elif code == 429:
             raise TooManyRequests()
 
+        elif code == 500:
+            raise InternalServerError()
+
     def request(self, method: str, version: str, path: str, *, params: dict = {}, headers: dict = {}):
         url = self.base_url + version + path
         res = getattr(requests, method.lower(), None)
@@ -36,7 +42,11 @@ class Client:
 
         response = res(url, headers=headers, params=params)
         self.check_error(response)
-        res=response.json()
+        res = None
+        try:
+            res=response.json()
+        except json.decoder.JSONDecodeError:
+            return response
 
         return res
 
@@ -47,7 +57,6 @@ class Client:
         -----------
         expression: str:
             The math expression, e.g '6+6'
-
         ans: str:
             Filled the 'Ans' word in expression. e.g if expression is 'Ans+2+1' and you defined ans argument as 1. Then the expression change to: 1+2+1 which is 4.
     
@@ -82,3 +91,17 @@ class Client:
         )
 
         return ResponseObject(res)
+
+    def invert_image(self, url: Optional[str] = None) -> Optional[bytes]:
+        if not url:
+            raise TypeError("Url cannot be None or empty string!")
+
+        res = self.request(
+            "POST",
+            "v1",
+            "/image/invert",
+            params = {
+                "img": url
+            }
+        )
+        return res.content
