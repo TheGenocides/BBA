@@ -51,7 +51,7 @@ class Client:
         return res
 
     def calculator(self, expression: str, ans: str = None) -> ResponseObject:
-        """ResponseObject: Solve certain math equations (calcPost)
+        """ResponseObject: Solve certain math equations.
 
         Parameters
         -----------
@@ -82,8 +82,13 @@ class Client:
 
         return ResponseObject(res)
 
-    def sentence(self) -> ResponseObject:
-        """ResponseObject: Generate a random sentence."""
+    def get_sentence(self) -> ResponseObject:
+        """ResponseObject: Generate a random sentence.
+        
+        Docs
+        ------
+        https://docs.api.breadbot.me/reference/api-reference/sentence-generator
+        """
         res = self.request(
             "POST", 
             "v1", 
@@ -93,6 +98,17 @@ class Client:
         return ResponseObject(res)
 
     def invert_image(self, url: Optional[str] = None) -> Optional[bytes]:
+        """Optional[:class:`bytes`]: Invert an image using the image url.
+
+        Parameters
+        ------------
+        url: Optional[:class:`str`]
+            The image's url to be invert.
+        
+        Docs
+        ------
+        https://docs.api.breadbot.me/reference/api-reference/image-manipulation
+        """
         if not url:
             raise TypeError("Url cannot be None or empty string!")
 
@@ -100,6 +116,31 @@ class Client:
             "POST",
             "v1",
             "/image/invert",
+            params = {
+                "img": url
+            }
+        )
+        return res.content
+
+    def pixelate_image(self, url: Optional[str] = None) -> Optional[bytes]:
+        """Optional[:class:`bytes`]: Pixelate an image using the image url.
+
+        Parameters
+        ------------
+        url: Optional[:class:`str`]
+            The image's url to be pixelate.
+        
+        Docs
+        ------
+        https://docs.api.breadbot.me/reference/api-reference/image-manipulation
+        """
+        if not url:
+            raise TypeError("Url cannot be None or empty string!")
+
+        res = self.request(
+            "POST",
+            "v1",
+            "/image/pixelate",
             params = {
                 "img": url
             }
